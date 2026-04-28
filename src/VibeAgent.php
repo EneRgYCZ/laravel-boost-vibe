@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Energycz\LaravelBoostVibe;
 
 use Illuminate\Support\Facades\File;
-use Laravel\Boost\Contracts\Agent;
-use Laravel\Boost\Contracts\McpClient;
-use Laravel\Boost\Install\CodeEnvironment\CodeEnvironment;
+use Laravel\Boost\Contracts\SupportsMcp;
+use Laravel\Boost\Contracts\SupportsGuidelines;
+use Laravel\Boost\Install\Agents\Agent;
 use Laravel\Boost\Install\Enums\McpInstallationStrategy;
 use Laravel\Boost\Install\Enums\Platform;
 
-class VibeAgent extends CodeEnvironment implements Agent, McpClient
+class VibeAgent extends Agent implements SupportsGuidelines, SupportsMcp
 {
     public function name(): string
     {
@@ -58,6 +58,16 @@ class VibeAgent extends CodeEnvironment implements Agent, McpClient
         return 'mcp_servers';
     }
 
+    public function guidelinesPath(): string
+    {
+        return config('boost.agents.vibe.guidelines_path', '.vibe/rules/laravel-boost.mdc');
+    }
+
+    public function frontmatter(): bool
+    {
+        return true;
+    }
+
     /** {@inheritDoc} */
     public function httpMcpServerConfig(string $url): array
     {
@@ -80,7 +90,7 @@ class VibeAgent extends CodeEnvironment implements Agent, McpClient
     }
 
     /**
-     * Install MCP server using Vibe's [[mcp_servers]] TOML array-of-tables format.
+     * Install MCP using Vibe's [[mcp_servers]] TOML array-of-tables format.
      *
      * @param  array<int, string>  $args
      * @param  array<string, string>  $env
@@ -197,15 +207,5 @@ class VibeAgent extends CodeEnvironment implements Agent, McpClient
             "\r" => '\\r',
             "\t" => '\\t',
         ]);
-    }
-
-    public function guidelinesPath(): string
-    {
-        return config('boost.code_environments.vibe.guidelines_path', '.vibe/rules/laravel-boost.mdc');
-    }
-
-    public function frontmatter(): bool
-    {
-        return true;
     }
 }
