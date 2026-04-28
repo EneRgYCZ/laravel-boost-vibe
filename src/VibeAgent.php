@@ -201,7 +201,7 @@ class VibeAgent extends CodeEnvironment implements Agent, McpClient
 
     public function guidelinesPath(): string
     {
-        return '.vibe/rules/laravel-boost.mdc';
+        return config('boost.code_environments.vibe.guidelines_path', '.vibe/rules/laravel-boost.mdc');
     }
 
     public function frontmatter(): bool

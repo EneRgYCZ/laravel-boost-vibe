@@ -6,6 +6,11 @@
             "Energycz\\LaravelBoostVibe\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Energycz\\LaravelBoostVibe\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Catalin Zaharia",

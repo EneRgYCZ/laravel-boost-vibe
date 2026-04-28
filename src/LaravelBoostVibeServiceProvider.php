@@ -37,9 +37,8 @@ class LaravelBoostVibeServiceProvider extends ServiceProvider
      */
     protected function registerVibeCodeEnvironment(): void
     {
-        if (class_exists(BoostManager::class)) {
-            $boostManager = $this->app->make(BoostManager::class);
-            $boostManager->registerCodeEnvironment('vibe', VibeAgent::class);
+        if ($this->app->bound(BoostManager::class)) {
+            $this->app->make(BoostManager::class)->registerCodeEnvironment('vibe', VibeAgent::class);
         }
     }
 }
