@@ -1,5 +1,6 @@
 {
     "name": "energycz/laravel-boost-vibe",
+    "description": "Mistral Vibe agent for Laravel Boost, adding MCP server, skills and guidelines support.",
     "type": "library",
     "homepage": "https://github.com/EneRgYCZ/laravel-boost-vibe",
     "license": "MIT",
