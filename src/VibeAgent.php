@@ -7,11 +7,12 @@ namespace Energycz\LaravelBoostVibe;
 use Illuminate\Support\Facades\File;
 use Laravel\Boost\Contracts\SupportsMcp;
 use Laravel\Boost\Contracts\SupportsGuidelines;
+use Laravel\Boost\Contracts\SupportsSkills;
 use Laravel\Boost\Install\Agents\Agent;
 use Laravel\Boost\Install\Enums\McpInstallationStrategy;
 use Laravel\Boost\Install\Enums\Platform;
 
-class VibeAgent extends Agent implements SupportsGuidelines, SupportsMcp
+class VibeAgent extends Agent implements SupportsGuidelines, SupportsMcp, SupportsSkills
 {
     public function name(): string
     {
@@ -61,6 +62,11 @@ class VibeAgent extends Agent implements SupportsGuidelines, SupportsMcp
     public function guidelinesPath(): string
     {
         return config('boost.agents.vibe.guidelines_path', '.vibe/rules/laravel-boost.mdc');
+    }
+
+    public function skillsPath(): string
+    {
+        return config('boost.agents.vibe.skills_path', '.vibe/skills');
     }
 
     public function frontmatter(): bool
