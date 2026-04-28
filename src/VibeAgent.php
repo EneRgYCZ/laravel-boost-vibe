@@ -61,17 +61,12 @@ class VibeAgent extends Agent implements SupportsGuidelines, SupportsMcp, Suppor
 
     public function guidelinesPath(): string
     {
-        return config('boost.agents.vibe.guidelines_path', '.vibe/rules/laravel-boost.mdc');
+        return config('boost.agents.vibe.guidelines_path', 'AGENTS.md');
     }
 
     public function skillsPath(): string
     {
         return config('boost.agents.vibe.skills_path', '.vibe/skills');
-    }
-
-    public function frontmatter(): bool
-    {
-        return true;
     }
 
     /** {@inheritDoc} */

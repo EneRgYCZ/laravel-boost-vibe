@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Energycz\LaravelBoostVibe\Tests\Unit;
 
-use Illuminate\Support\Facades\File;
 use Energycz\LaravelBoostVibe\VibeAgent;
+use Illuminate\Support\Facades\File;
 use Laravel\Boost\Install\Detection\DetectionStrategyFactory;
 use Laravel\Boost\Install\Enums\McpInstallationStrategy;
 use Laravel\Boost\Install\Enums\Platform;
@@ -45,10 +45,16 @@ test('mcpConfigKey returns mcp_servers', function (): void {
     expect($agent->mcpConfigKey())->toBe('mcp_servers');
 });
 
-test('guidelinesPath returns correct path', function (): void {
+test('guidelinesPath returns AGENTS.md', function (): void {
     $agent = new VibeAgent($this->strategyFactory);
 
-    expect($agent->guidelinesPath())->toBe('.vibe/rules/laravel-boost.mdc');
+    expect($agent->guidelinesPath())->toBe('AGENTS.md');
+});
+
+test('skillsPath returns .vibe/skills', function (): void {
+    $agent = new VibeAgent($this->strategyFactory);
+
+    expect($agent->skillsPath())->toBe('.vibe/skills');
 });
 
 test('projectDetectionConfig uses .vibe directory and config.toml', function (): void {
@@ -63,25 +69,19 @@ test('projectDetectionConfig uses .vibe directory and config.toml', function ():
 test('system detection uses command -v on Darwin', function (): void {
     $agent = new VibeAgent($this->strategyFactory);
 
-    $config = $agent->systemDetectionConfig(Platform::Darwin);
-
-    expect($config['command'])->toBe('command -v vibe');
+    expect($agent->systemDetectionConfig(Platform::Darwin)['command'])->toBe('command -v vibe');
 });
 
 test('system detection uses command -v on Linux', function (): void {
     $agent = new VibeAgent($this->strategyFactory);
 
-    $config = $agent->systemDetectionConfig(Platform::Linux);
-
-    expect($config['command'])->toBe('command -v vibe');
+    expect($agent->systemDetectionConfig(Platform::Linux)['command'])->toBe('command -v vibe');
 });
 
 test('system detection uses where command on Windows', function (): void {
     $agent = new VibeAgent($this->strategyFactory);
 
-    $config = $agent->systemDetectionConfig(Platform::Windows);
-
-    expect($config['command'])->toBe('cmd /c where vibe 2>nul');
+    expect($agent->systemDetectionConfig(Platform::Windows)['command'])->toBe('cmd /c where vibe 2>nul');
 });
 
 test('mcpServerConfig includes transport stdio', function (): void {
@@ -133,15 +133,8 @@ test('installMcp creates TOML config with [[mcp_servers]] array format', functio
     $agent = new VibeAgent($this->strategyFactory);
     $capturedContent = '';
 
-    File::shouldReceive('ensureDirectoryExists')
-        ->once()
-        ->with('.vibe');
-
-    File::shouldReceive('exists')
-        ->once()
-        ->with('.vibe/config.toml')
-        ->andReturn(false);
-
+    File::shouldReceive('ensureDirectoryExists')->once()->with('.vibe');
+    File::shouldReceive('exists')->once()->with('.vibe/config.toml')->andReturn(false);
     File::shouldReceive('put')
         ->once()
         ->with(Mockery::any(), Mockery::capture($capturedContent))
@@ -161,15 +154,8 @@ test('installMcp with env vars includes them in the block', function (): void {
     $agent = new VibeAgent($this->strategyFactory);
     $capturedContent = '';
 
-    File::shouldReceive('ensureDirectoryExists')
-        ->once()
-        ->with('.vibe');
-
-    File::shouldReceive('exists')
-        ->once()
-        ->with('.vibe/config.toml')
-        ->andReturn(false);
-
+    File::shouldReceive('ensureDirectoryExists')->once()->with('.vibe');
+    File::shouldReceive('exists')->once()->with('.vibe/config.toml')->andReturn(false);
     File::shouldReceive('put')
         ->once()
         ->with(Mockery::any(), Mockery::capture($capturedContent))
@@ -189,15 +175,8 @@ test('installHttpMcp creates TOML config with http transport', function (): void
     $agent = new VibeAgent($this->strategyFactory);
     $capturedContent = '';
 
-    File::shouldReceive('ensureDirectoryExists')
-        ->once()
-        ->with('.vibe');
-
-    File::shouldReceive('exists')
-        ->once()
-        ->with('.vibe/config.toml')
-        ->andReturn(false);
-
+    File::shouldReceive('ensureDirectoryExists')->once()->with('.vibe');
+    File::shouldReceive('exists')->once()->with('.vibe/config.toml')->andReturn(false);
     File::shouldReceive('put')
         ->once()
         ->with(Mockery::any(), Mockery::capture($capturedContent))
@@ -224,25 +203,10 @@ command = "other"
 args = ["run"]
 TOML;
 
-    File::shouldReceive('ensureDirectoryExists')
-        ->once()
-        ->with('.vibe');
-
-    File::shouldReceive('exists')
-        ->once()
-        ->with('.vibe/config.toml')
-        ->andReturn(true);
-
-    File::shouldReceive('size')
-        ->once()
-        ->with('.vibe/config.toml')
-        ->andReturn(strlen($existingConfig));
-
-    File::shouldReceive('get')
-        ->once()
-        ->with('.vibe/config.toml')
-        ->andReturn($existingConfig);
-
+    File::shouldReceive('ensureDirectoryExists')->once()->with('.vibe');
+    File::shouldReceive('exists')->once()->with('.vibe/config.toml')->andReturn(true);
+    File::shouldReceive('size')->once()->with('.vibe/config.toml')->andReturn(strlen($existingConfig));
+    File::shouldReceive('get')->once()->with('.vibe/config.toml')->andReturn($existingConfig);
     File::shouldReceive('put')
         ->once()
         ->with(Mockery::any(), Mockery::capture($capturedContent))
@@ -267,25 +231,10 @@ command = "old-php"
 args = ["old-artisan"]
 TOML;
 
-    File::shouldReceive('ensureDirectoryExists')
-        ->once()
-        ->with('.vibe');
-
-    File::shouldReceive('exists')
-        ->once()
-        ->with('.vibe/config.toml')
-        ->andReturn(true);
-
-    File::shouldReceive('size')
-        ->once()
-        ->with('.vibe/config.toml')
-        ->andReturn(strlen($existingConfig));
-
-    File::shouldReceive('get')
-        ->once()
-        ->with('.vibe/config.toml')
-        ->andReturn($existingConfig);
-
+    File::shouldReceive('ensureDirectoryExists')->once()->with('.vibe');
+    File::shouldReceive('exists')->once()->with('.vibe/config.toml')->andReturn(true);
+    File::shouldReceive('size')->once()->with('.vibe/config.toml')->andReturn(strlen($existingConfig));
+    File::shouldReceive('get')->once()->with('.vibe/config.toml')->andReturn($existingConfig);
     File::shouldReceive('put')
         ->once()
         ->with(Mockery::any(), Mockery::capture($capturedContent))

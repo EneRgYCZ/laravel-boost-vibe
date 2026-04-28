@@ -6,6 +6,10 @@ namespace Energycz\LaravelBoostVibe\Tests\Integration;
 
 use Energycz\LaravelBoostVibe\VibeAgent;
 use Laravel\Boost\BoostManager;
+use Laravel\Boost\Contracts\SupportsGuidelines;
+use Laravel\Boost\Contracts\SupportsMcp;
+use Laravel\Boost\Contracts\SupportsSkills;
+use Laravel\Boost\Install\Agents\Agent;
 use Laravel\Boost\Install\Detection\DetectionStrategyFactory;
 use Mockery;
 
@@ -19,21 +23,27 @@ test('VibeAgent can be instantiated', function (): void {
     expect($agent)->toBeInstanceOf(VibeAgent::class);
 });
 
+test('VibeAgent implements all required interfaces', function (): void {
+    $agent = new VibeAgent($this->strategyFactory);
+
+    expect($agent)
+        ->toBeInstanceOf(Agent::class)
+        ->toBeInstanceOf(SupportsGuidelines::class)
+        ->toBeInstanceOf(SupportsMcp::class)
+        ->toBeInstanceOf(SupportsSkills::class);
+});
+
 test('VibeAgent can be registered with BoostManager', function (): void {
     $boostManager = new BoostManager();
 
     $boostManager->registerAgent('vibe', VibeAgent::class);
 
-    $agents = $boostManager->getAgents();
-
-    expect(array_key_exists('vibe', $agents))->toBeTrue();
-    expect($agents['vibe'])->toBe(VibeAgent::class);
+    expect($boostManager->getAgents())->toHaveKey('vibe')
+        ->and($boostManager->getAgents()['vibe'])->toBe(VibeAgent::class);
 });
 
-test('VibeAgent implements required interfaces', function (): void {
-    $agent = new VibeAgent($this->strategyFactory);
+test('VibeAgent is not registered by default in BoostManager', function (): void {
+    $boostManager = new BoostManager();
 
-    expect($agent)->toBeInstanceOf(\Laravel\Boost\Install\Agents\Agent::class);
-    expect($agent)->toBeInstanceOf(\Laravel\Boost\Contracts\SupportsGuidelines::class);
-    expect($agent)->toBeInstanceOf(\Laravel\Boost\Contracts\SupportsMcp::class);
+    expect($boostManager->getAgents())->not->toHaveKey('vibe');
 });

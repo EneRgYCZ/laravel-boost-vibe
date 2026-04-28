@@ -1,6 +1,7 @@
 {
     "name": "energycz/laravel-boost-vibe",
     "type": "library",
+    "homepage": "https://github.com/EneRgYCZ/laravel-boost-vibe",
     "autoload": {
         "psr-4": {
             "Energycz\\LaravelBoostVibe\\": "src/"
@@ -14,16 +15,21 @@
     "authors": [
         {
             "name": "Catalin Zaharia",
-            "email": "catalin.zaharia2013@gmail.com"
+            "email": "catalin.zaharia2013@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {
+        "php": "^8.2",
         "laravel/boost": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0",
         "mockery/mockery": "^1.6",
         "pestphp/pest": "^2.36"
+    },
+    "scripts": {
+        "test": "./vendor/bin/pest"
     },
     "config": {
         "allow-plugins": {
