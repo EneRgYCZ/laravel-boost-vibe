@@ -8,8 +8,6 @@ Adds [Mistral Vibe](https://vibe.mistral.ai) support to [Laravel Boost](https://
 composer require energycz/laravel-boost-vibe
 ```
 
-The agent registers itself automatically via Laravel's package discovery.
-
 ## Credits
 
 The Vibe agent implementation is based on the original PR by [@HeathNaylor](https://github.com/HeathNaylor). This package simply wraps that work for standalone distribution.
