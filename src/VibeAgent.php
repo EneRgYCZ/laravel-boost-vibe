@@ -85,7 +85,7 @@ class VibeAgent extends Agent implements SupportsGuidelines, SupportsMcp
             'command' => $command,
             'args' => $args,
             'env' => $env,
-        ])->filter(fn ($value): bool => ! in_array($value, [[], null, ''], true))
+        ])->filter(fn($value): bool => ! in_array($value, [[], null, ''], true))
             ->toArray();
     }
 
@@ -130,8 +130,8 @@ class VibeAgent extends Agent implements SupportsGuidelines, SupportsMcp
 
         $block = $this->buildVibeTomlBlock($key, $config);
         $trimmed = rtrim($content);
-        $separator = $trimmed === '' ? '' : PHP_EOL.PHP_EOL;
-        $content = $trimmed.$separator.$block.PHP_EOL;
+        $separator = $trimmed === '' ? '' : PHP_EOL . PHP_EOL;
+        $content = $trimmed . $separator . $block . PHP_EOL;
 
         return File::put($path, $content) !== false;
     }
@@ -145,7 +145,7 @@ class VibeAgent extends Agent implements SupportsGuidelines, SupportsMcp
     {
         $lines = [];
         $lines[] = '[[mcp_servers]]';
-        $lines[] = 'name = "'.$this->escapeTomlString($key).'"';
+        $lines[] = 'name = "' . $this->escapeTomlString($key) . '"';
 
         $envData = [];
 
@@ -156,12 +156,12 @@ class VibeAgent extends Agent implements SupportsGuidelines, SupportsMcp
                 continue;
             }
 
-            $lines[] = $field.' = '.$this->formatTomlValue($value);
+            $lines[] = $field . ' = ' . $this->formatTomlValue($value);
         }
 
         if ($envData !== []) {
             foreach ($envData as $envKey => $envValue) {
-                $lines[] = $envKey.' = '.$this->formatTomlValue($envValue);
+                $lines[] = $envKey . ' = ' . $this->formatTomlValue($envValue);
             }
         }
 
@@ -174,7 +174,7 @@ class VibeAgent extends Agent implements SupportsGuidelines, SupportsMcp
     protected function removeVibeServer(string $content, string $key): string
     {
         $escapedKey = preg_quote($key, '/');
-        $pattern = '/(\r?\n)*\[\[mcp_servers\]\]\s*\r?\nname\s*=\s*"'.$escapedKey.'".*?(?=\r?\n\[\[|\r?\n\[(?!\\[)|\Z)/s';
+        $pattern = '/(\r?\n)*\[\[mcp_servers\]\]\s*\r?\nname\s*=\s*"' . $escapedKey . '".*?(?=\r?\n\[\[|\r?\n\[(?!\\[)|\Z)/s';
 
         return preg_replace($pattern, '', $content) ?? $content;
     }
@@ -182,13 +182,13 @@ class VibeAgent extends Agent implements SupportsGuidelines, SupportsMcp
     protected function formatTomlValue(mixed $value): string
     {
         if (is_string($value)) {
-            return '"'.$this->escapeTomlString($value).'"';
+            return '"' . $this->escapeTomlString($value) . '"';
         }
 
         if (is_array($value)) {
             $items = array_map($this->formatTomlValue(...), $value);
 
-            return '['.implode(', ', $items).']';
+            return '[' . implode(', ', $items) . ']';
         }
 
         if (is_bool($value)) {
