@@ -1,6 +1,6 @@
-# Laravel Boost — Vibe Agent
+# Laravel Boost Vibe
 
-Adds [Mistral Vibe](https://vibe.mistral.ai) support to [Laravel Boost](https://github.com/laravel/boost), allowing Boost to install MCP servers and guidelines for Vibe-based workflows.
+Adds [Mistral Vibe](https://mistral.ai/products/vibe) support to [Laravel Boost](https://github.com/laravel/boost), allowing Boost to install MCP servers, skills and guidelines for Vibe-based workflows.
 
 ## Installation
 
