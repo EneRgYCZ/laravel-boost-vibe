@@ -19,7 +19,6 @@
     ],
     "require": {
         "laravel/boost": "^2.0",
-        "orchestra/testbench": "^9.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0",
