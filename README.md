@@ -5,7 +5,7 @@ Adds [Mistral Vibe](https://mistral.ai/products/vibe) support to [Laravel Boost]
 ## Installation
 
 ```bash
-composer require energycz/laravel-boost-vibe
+composer require energycz/laravel-boost-vibe --dev
 ```
 
 ## Credits
