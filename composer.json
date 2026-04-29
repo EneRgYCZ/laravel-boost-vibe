@@ -16,9 +16,13 @@
     },
     "authors": [
         {
+            "name": "HeathNaylor",
+            "role": "Original Author"
+        },
+        {
             "name": "Catalin Zaharia",
             "email": "catalin.zaharia2013@gmail.com",
-            "role": "Developer"
+            "role": "Maintainer"
         }
     ],
     "require": {
