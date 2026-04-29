@@ -10,4 +10,4 @@ composer require energycz/laravel-boost-vibe
 
 ## Credits
 
-The Vibe agent implementation is based on the original PR by [@HeathNaylor](https://github.com/HeathNaylor). This package simply wraps that work for standalone distribution.
+The Vibe agent implementation is based on the original [PR](https://github.com/laravel/boost/pull/649) by [@HeathNaylor](https://github.com/HeathNaylor). This package simply wraps that work for standalone distribution.
