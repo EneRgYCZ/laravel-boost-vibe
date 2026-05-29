@@ -4,7 +4,7 @@
     "type": "library",
     "homepage": "https://github.com/EneRgYCZ/laravel-boost-vibe",
     "license": "MIT",
-    "version": "1.0.1",
+    "version": "v1.0.1",
     "autoload": {
         "psr-4": {
             "Energycz\\LaravelBoostVibe\\": "src/"
